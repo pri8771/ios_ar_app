@@ -5,7 +5,7 @@
          <BuildActionEntry buildForTesting = "YES" buildForRunning = "YES" buildForProfiling = "YES" buildForArchiving = "YES" buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "SL0000000000000000000040"
+               BlueprintIdentifier = "SL0000000000000000000044"
                BuildableName = "ShadowLens.app"
                BlueprintName = "ShadowLens"
                ReferencedContainer = "container:ShadowLens.xcodeproj">
@@ -18,7 +18,7 @@
          <TestableReference skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "SL0000000000000000000041"
+               BlueprintIdentifier = "SL0000000000000000000045"
                BuildableName = "ShadowLensTests.xctest"
                BlueprintName = "ShadowLensTests"
                ReferencedContainer = "container:ShadowLens.xcodeproj">
@@ -30,7 +30,7 @@
       <BuildableProductRunnable runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "SL0000000000000000000040"
+            BlueprintIdentifier = "SL0000000000000000000044"
             BuildableName = "ShadowLens.app"
             BlueprintName = "ShadowLens"
             ReferencedContainer = "container:ShadowLens.xcodeproj">
@@ -41,7 +41,7 @@
       <BuildableProductRunnable runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "SL0000000000000000000040"
+            BlueprintIdentifier = "SL0000000000000000000044"
             BuildableName = "ShadowLens.app"
             BlueprintName = "ShadowLens"
             ReferencedContainer = "container:ShadowLens.xcodeproj">

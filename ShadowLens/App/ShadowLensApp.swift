@@ -18,12 +18,19 @@ struct ShadowLensApp: App {
     let container: ModelContainer
 
     init() {
-        let schema = Schema([ARProject.self, PlacedBlocker.self, AppSettings.self])
+        // Build from the versioned schema so future model changes migrate
+        // cleanly instead of failing to open the on-device store.
+        let schema = Schema(versionedSchema: CurrentSchema.self)
         do {
             let config = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-            container = try ModelContainer(for: schema, configurations: [config])
+            container = try ModelContainer(
+                for: schema,
+                migrationPlan: ShadowLensMigrationPlan.self,
+                configurations: [config])
         } catch {
             // Defensive fallback: never block launch on a persistence error.
+            // An in-memory store keeps the app usable for the session even if
+            // the on-disk store is corrupt or a migration cannot complete.
             let memory = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
             // swiftlint:disable:next force_try
             container = try! ModelContainer(for: schema, configurations: [memory])

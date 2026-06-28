@@ -22,25 +22,26 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.utilities</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>UILaunchScreen</key>
 	<dict>
 		<key>UIColorName</key>
-		<string></string>
+		<string>LaunchBackground</string>
+		<key>UIImageRespectsSafeAreaInsets</key>
+		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>Shadow Lens uses the camera to show the live AR view where you place objects and preview shadows. Camera frames are processed on-device only and are never uploaded.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Shadow Lens uses your location only while the app is open to compute the sun's position locally. Your location is never stored off-device or shared.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Shadow Lens needs permission to save a shadow snapshot to your photo library when you choose to export one. Images are saved only at your request.</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-	</array>
-	<key>UISupportedInterfaceOrientations~ipad</key>
-	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationPortraitUpsideDown</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
