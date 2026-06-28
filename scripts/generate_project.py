@@ -124,9 +124,23 @@ w("/* End PBXContainerItemProxy section */")
 
 # PBXFileReference
 w("\n/* Begin PBXFileReference section */")
+
+def group_rel(p):
+    """Path of a source file relative to its target's top-level group dir.
+
+    `p` is relative to ROOT (e.g. 'ShadowLens/Services/Foo.swift'); the file
+    reference must be relative to the group it lives in (the app/test group
+    whose path is the top-level dir), e.g. 'Services/Foo.swift'. Using only the
+    basename would make Xcode look in the group root and fail to find files that
+    live in subfolders.
+    """
+    top = p.split(os.sep)[0]
+    return os.path.relpath(p, top)
+
 for p in app_sources + test_sources:
     name = os.path.basename(p)
-    w(f"\t\t{file_ref[p]} /* {name} */ = {{isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = {name}; sourceTree = \"<group>\"; }};")
+    rel = group_rel(p)
+    w(f"\t\t{file_ref[p]} /* {name} */ = {{isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = {rel}; sourceTree = \"<group>\"; }};")
 w(f"\t\t{file_ref[assets_rel]} /* Assets.xcassets */ = {{isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = \"<group>\"; }};")
 w(f"\t\t{file_ref[privacy_rel]} /* PrivacyInfo.xcprivacy */ = {{isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Resources/PrivacyInfo.xcprivacy; sourceTree = \"<group>\"; }};")
 w(f"\t\t{uid()} /* Info.plist placeholder */ = {{isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = \"<group>\"; }};")
