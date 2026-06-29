@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate ShadowLens.xcodeproj/project.pbxproj for the Shadow Lens app.
+"""Generate Umbra.xcodeproj/project.pbxproj for the Umbra app.
 
 Hand-writing pbxproj UUIDs is error-prone, so this generator scans the source
 tree and emits a valid Xcode 15 (objectVersion 56) project with an app target
@@ -10,9 +10,9 @@ and a unit-test target. Re-run after adding/removing source files:
 import os
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-APP_NAME = "ShadowLens"
-TEST_NAME = "ShadowLensTests"
-BUNDLE_ID = "com.localfirst.shadowlens"
+APP_NAME = "Umbra"
+TEST_NAME = "UmbraTests"
+BUNDLE_ID = "com.localfirst.umbra"
 DEPLOYMENT_TARGET = "17.0"
 
 _counter = [0]
@@ -119,10 +119,22 @@ w("\t\t};")
 w("/* End PBXContainerItemProxy section */")
 
 # PBXFileReference
+# Each Swift file's PBXFileReference lives under the app/test group whose
+# `path` is the target name (Umbra / UmbraTests). To let Xcode resolve files
+# that live in subdirectories on disk, the reference `path` must be relative to
+# that group, i.e. the portion after "Umbra/" (e.g. "Views/RootView.swift").
+def group_relative_path(p):
+    # p is relative to ROOT, e.g. "Umbra/Views/RootView.swift".
+    # Strip the leading target-name component so the path is relative to the
+    # group (whose own `path` is the target name).
+    parts = p.split(os.sep)
+    return os.path.join(*parts[1:]) if len(parts) > 1 else p
+
 w("\n/* Begin PBXFileReference section */")
 for p in app_sources + test_sources:
     name = os.path.basename(p)
-    w(f"\t\t{file_ref[p]} /* {name} */ = {{isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = {name}; sourceTree = \"<group>\"; }};")
+    rel = group_relative_path(p)
+    w(f"\t\t{file_ref[p]} /* {name} */ = {{isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = {rel}; sourceTree = \"<group>\"; }};")
 w(f"\t\t{file_ref[assets_rel]} /* Assets.xcassets */ = {{isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = \"<group>\"; }};")
 w(f"\t\t{uid()} /* Info.plist placeholder */ = {{isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = \"<group>\"; }};")
 w(f"\t\t{app_product} /* {APP_NAME}.app */ = {{isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = {APP_NAME}.app; sourceTree = BUILT_PRODUCTS_DIR; }};")

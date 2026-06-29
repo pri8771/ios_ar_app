@@ -1,11 +1,11 @@
-# Shadow Lens Terms of Service
+# Umbra Terms of Service
 
 **Effective Date:** June 2026
 **Last Updated:** June 2026
 
 ## 1. Acceptance of Terms
 
-By downloading, installing, or using Shadow Lens ("App"), you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use the App.
+By downloading, installing, or using Umbra ("App"), you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use the App.
 
 ## 2. License Grant
 
@@ -23,7 +23,7 @@ You may not:
          
           - ## 4. AR Accuracy Disclaimer
          
-          - **IMPORTANT:** Shadow Lens does not reconstruct real-world geometry. The app:
+          - **IMPORTANT:** Umbra does not reconstruct real-world geometry. The app:
           - - Projects simplified shadow predictions based on user-placed proxy objects
             - - Uses estimated blocker positions (not precise 3D scanning)
               - - Relies on manual date/time input for sun calculations

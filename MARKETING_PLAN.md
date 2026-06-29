@@ -1,4 +1,4 @@
-# Shadow Lens Marketing & Launch Plan
+# Umbra Marketing & Launch Plan
 
 **Launch Target:** July 2026
 **Platforms:** iOS App Store
@@ -9,7 +9,7 @@
 **Tagline:** "See where the shade will be. Anytime, anywhere."
 
 **Core Value Proposition:**
-Shadow Lens makes it simple to visualize how shadows move throughout the day in any outdoor or indoor space. Using AR and sun calculations, instantly preview where shadows will land before building, landscaping, or outdoor planning.
+Umbra makes it simple to visualize how shadows move throughout the day in any outdoor or indoor space. Using AR and sun calculations, instantly preview where shadows will land before building, landscaping, or outdoor planning.
 
 **Unique Selling Points:**
 - Local-first: No account, no cloud, no tracking
@@ -41,7 +41,7 @@ Shadow Lens makes it simple to visualize how shadows move throughout the day in 
 ## Marketing Messaging
 
 ### Primary Message (For Homeowners)
-"Never be surprised by shadows again. Shadow Lens shows you exactly where shadows will fall at any time of day, helping you make better decisions about gardens, patios, solar panels, and outdoor living spaces."
+"Never be surprised by shadows again. Umbra shows you exactly where shadows will fall at any time of day, helping you make better decisions about gardens, patios, solar panels, and outdoor living spaces."
 
 ### Secondary Message (For Professionals)
 "Close deals faster with on-site AR visualization. Show clients exactly how shadows will impact their property throughout the day—no more guesswork."
@@ -69,12 +69,12 @@ Shadow Lens makes it simple to visualize how shadows move throughout the day in 
 - Engage with homeowners on YouTube, Reddit, Instagram
 - Respond to reviews in App Store
 - Build community around shadow planning tips
-- User stories: "how I used Shadow Lens"
+- User stories: "how I used Umbra"
 
 ## App Store Optimization (ASO)
 
 ### Title
-"Shadow Lens - AR Sun & Shade Planner"
+"Umbra - AR Sun & Shade Planner"
 
 ### Subtitle
 "Visualize shadows for gardens, patios & solar"
@@ -92,9 +92,9 @@ Shadow Lens makes it simple to visualize how shadows move throughout the day in 
 10. iPhone AR
 
 ### Description
-"Shadow Lens is a beautiful AR sun & shade planner. Point your iPhone at any outdoor or indoor space, and see exactly where shadows will fall throughout the day.
+"Umbra is a beautiful AR sun & shade planner. Point your iPhone at any outdoor or indoor space, and see exactly where shadows will fall throughout the day.
 
-Use Shadow Lens to:
+Use Umbra to:
 ✓ Plan gardens and patios without sun surprises
 ✓ Check solar panel placement
 ✓ Visualize outdoor furniture placement
@@ -104,7 +104,7 @@ Use Shadow Lens to:
 
 No accounts. No tracking. No servers. All shadow calculations happen locally on your device—completely private.
 
-Shadow Lens uses simplified physics-based calculations suitable for planning reference. Not for professional surveying or critical construction decisions.
+Umbra uses simplified physics-based calculations suitable for planning reference. Not for professional surveying or critical construction decisions.
 
 Works on iPhone 12 and newer with ARKit support."
 
@@ -181,6 +181,6 @@ Works on iPhone 12 and newer with ARKit support."
 
 ## Summary
 
-Shadow Lens is a beautifully simple, privacy-first AR app that solves a real problem for homeowners and professionals. With strong ASO, organic community engagement, and word-of-mouth from early users, Shadow Lens has strong potential to gain traction in the utilities and lifestyle categories.
+Umbra is a beautifully simple, privacy-first AR app that solves a real problem for homeowners and professionals. With strong ASO, organic community engagement, and word-of-mouth from early users, Umbra has strong potential to gain traction in the utilities and lifestyle categories.
 
 The path to success is authentic community building, not paid marketing—leveraging niche communities who care about both AR innovation and practical home planning.

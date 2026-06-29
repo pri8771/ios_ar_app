@@ -1,13 +1,13 @@
-# Shadow Lens
+# Umbra
 
 **Point your camera, drop a simple object, scrub the time, and see where shade will land.**
 
-Shadow Lens is a **local-first** iOS AR sun & shade planner. Point your iPhone at
+Umbra is a **local-first** iOS AR sun & shade planner. Point your iPhone at
 an outdoor or indoor space, detect a ground plane, place simple proxy objects
 (pole / box / wall / person / tree), then scrub the date and time to preview
 where shadows fall throughout the day.
 
-> **Honest by design.** Shadow Lens does **not** reconstruct real-world
+> **Honest by design.** Umbra does **not** reconstruct real-world
 > geometry. It projects physically plausible shadows from the proxy objects
 > *you* place onto a detected horizontal plane, and clearly labels every result
 > as **approximate**.
@@ -32,11 +32,11 @@ where shadows fall throughout the day.
 
 ```bash
 # Open in Xcode
-open ShadowLens.xcodeproj
+open Umbra.xcodeproj
 
 # Or build / test from the command line (simulator)
-xcodebuild -scheme ShadowLens -destination 'platform=iOS Simulator,name=iPhone 15' build
-xcodebuild -scheme ShadowLens -destination 'platform=iOS Simulator,name=iPhone 15' test
+xcodebuild -scheme Umbra -destination 'platform=iOS Simulator,name=iPhone 15' build
+xcodebuild -scheme Umbra -destination 'platform=iOS Simulator,name=iPhone 15' test
 ```
 
 The Xcode project is generated from the source tree by
@@ -53,8 +53,8 @@ python3 scripts/generate_project.py
 stateless services. ARKit + RealityKit power the on-device AR experience.
 
 ```
-ShadowLens/
-├── App/                 ShadowLensApp – SwiftUI lifecycle + SwiftData container
+Umbra/
+├── App/                 UmbraApp – SwiftUI lifecycle + SwiftData container
 ├── Models/              SwiftData models (ARProject, PlacedBlocker, AppSettings)
 ├── Services/
 │   ├── SunPositionService     NOAA/Meeus solar azimuth + elevation (+ refraction)

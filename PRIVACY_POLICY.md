@@ -1,11 +1,11 @@
-# Shadow Lens Privacy Policy
+# Umbra Privacy Policy
 
 **Effective Date:** June 2026
 **Last Updated:** June 2026
 
 ## Overview
 
-Shadow Lens is a local-first AR sun & shade planner that respects your privacy. This app processes all data locally on your device without sending information to external servers.
+Umbra is a local-first AR sun & shade planner that respects your privacy. This app processes all data locally on your device without sending information to external servers.
 
 ## Data Collection & Processing
 
@@ -16,7 +16,7 @@ Shadow Lens is a local-first AR sun & shade planner that respects your privacy. 
 - AR scene detection uses ARKit's on-device processing only
 
 ### Location Data
-- **NOT collected or used** by Shadow Lens
+- **NOT collected or used** by Umbra
 - Sun calculations use your manual date/time input, not location services
 - The app runs completely offline
 
@@ -40,7 +40,7 @@ Shadow Lens is a local-first AR sun & shade planner that respects your privacy. 
 
 ## Third-Party Services
 
-Shadow Lens does NOT use:
+Umbra does NOT use:
 - Analytics services (Google Analytics, Mixpanel, etc.)
 - Crash reporting services (Sentry, Firebase Crashlytics)
 - Advertisement networks
@@ -60,11 +60,11 @@ Shadow Lens does NOT use:
 
 ## Children's Privacy
 
-Shadow Lens does not knowingly collect personal information from children. Since the app processes everything locally with no external data transmission, there are no child-specific privacy concerns.
+Umbra does not knowingly collect personal information from children. Since the app processes everything locally with no external data transmission, there are no child-specific privacy concerns.
 
 ## Changes to This Privacy Policy
 
-We may update this policy periodically. Continued use of Shadow Lens constitutes acceptance of the updated policy.
+We may update this policy periodically. Continued use of Umbra constitutes acceptance of the updated policy.
 
 ## Questions?
 
