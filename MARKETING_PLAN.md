@@ -1,8 +1,19 @@
 # Umbra Marketing & Launch Plan
 
+_Updated 2026-06-30 to match the shipped product and launch scope. See LAUNCH_READINESS.md._
+
+> **Copy accuracy gate (read before publishing any store metadata).** Umbra is
+> **approximate by design** and **free** (no in-app purchases exist in the app). Do **not**
+> use "accurate," "precise," or "real physics … accurate" in store-facing copy, and do
+> **not** advertise a "Premium" tier in v1 — it is not built. Lead with the honest,
+> local-first, approximate framing. Also note the app makes one Apple geocoding network
+> call (place-name lookup), so avoid absolute "no network / fully offline" claims until
+> reconciled. See LAUNCH_READINESS.md §7 (BLK-3, BLK-6). The audience, channel, ASO, and
+> timeline sections below remain useful directionally.
+
 **Launch Target:** July 2026
 **Platforms:** iOS App Store
-**Category:** Utilities / Photography / Lifestyle
+**Category:** Utilities / Lifestyle (with Photography/AR keywords)
 
 ## Product Positioning
 
@@ -12,11 +23,12 @@
 Umbra makes it simple to visualize how shadows move throughout the day in any outdoor or indoor space. Using AR and sun calculations, instantly preview where shadows will land before building, landscaping, or outdoor planning.
 
 **Unique Selling Points:**
-- Local-first: No account, no cloud, no tracking
+- Local-first: No account, no cloud, no analytics, no developer backend
 - Instant AR visualization - point and plan
-- Real physics: Accurate sun position calculations
-- Accessible: Works on any AR-capable iPhone
-- Privacy-focused: Camera data never leaves your device
+- Real solar math: physically-grounded sun position from your date/time/location (results are an **approximate** planning aid, not a survey)
+- Honest by design: clearly labels every result as approximate
+- Works on AR-capable iPhones; a preview mode lets you plan even without AR
+- Privacy-focused: camera frames are processed on-device and never uploaded
 
 ## Target Audience
 

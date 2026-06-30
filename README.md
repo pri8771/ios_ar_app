@@ -1,5 +1,7 @@
 # Umbra
 
+_Updated 2026-06-30 to match the shipped product and launch scope. See [LAUNCH_READINESS.md](LAUNCH_READINESS.md)._
+
 **Point your camera, drop a simple object, scrub the time, and see where shade will land.**
 
 Umbra is a **local-first** iOS AR sun & shade planner. Point your iPhone at
@@ -15,10 +17,16 @@ where shadows fall throughout the day.
 ## Privacy & local-first guarantees
 
 - ✅ Fully on-device. **No backend, no accounts, no analytics, no cloud sync.**
-- ✅ **No third-party packages** and **no network calls** anywhere.
+- ✅ **No third-party packages.**
 - ✅ All projects are stored locally via **SwiftData**.
 - ✅ Location is used **only in the foreground**, **only on-device**, to compute
-  the sun's position. It is never stored off-device or transmitted.
+  the sun's position. It is never stored off-device or sent to any developer server.
+- ⚠️ **One platform network touch:** to display a friendly place name, the app uses
+  Apple's CoreLocation **reverse geocoding** (`CLGeocoder`), which is an online lookup
+  handled by Apple. This is the only outbound network call. It must be reconciled with
+  the "no network" copy before launch (disclose or disable) — see
+  [LAUNCH_READINESS.md](LAUNCH_READINESS.md) §7, BLK-3. The solar math itself is fully
+  offline.
 
 ## Requirements
 
