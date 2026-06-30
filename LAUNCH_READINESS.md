@@ -25,7 +25,16 @@
 > claims (BLK-4, BLK-6). The lens gained an honest stamped export, a height slider, a
 > "re-detect ground" affordance, a first-use location nudge, haptics, and a cohesive brand
 > design system; shadow legibility was tuned for outdoor light. CI (GitHub Actions) builds and
-> tests on every push. **The only remaining launch gate is BLK-1: on-device AR validation on
+> tests on every push.
+>
+> **Strategy alignment (from the `pri8771/conversation` planning thread).** The product is a
+> **consumer patio/garden shade utility first** (no solar/architecture/precision claims). Two
+> changes land the thread's central call — *lead with one successful "now-shadow matches" trust
+> moment*: a **"Now" button** on the time scrubber that jumps to the current instant so the user
+> can compare the projected shadow against the real one, and a **first-run lens coach** that
+> teaches exactly that check. An **umbrella proxy** was added for the patio centerpiece. The
+> stamped export is the consumer "send the 4pm shade to your partner" artifact (and the future
+> designer-proposal asset). **The only remaining launch gate is BLK-1: on-device AR validation on
 > real hardware**, which cannot be done from source alone.
 
 ---
@@ -145,10 +154,11 @@ unavailable.
 - Shadows, sun marker, and selection highlight update live as time/objects change.
 - A VoiceOver "Add object at center" action exists for the canvas.
 
-### F5. Proxy object palette (pole / box / wall / person / tree) — **Built**
+### F5. Proxy object palette (pole / umbrella / box / wall / person / tree) — **Built**
 `BlockerKind` enum + `ObjectPaletteView.swift`; each kind has a default real-world size and
-SF Symbol; selection drives the next placement.
-- All five kinds are selectable with clear selected state and accessibility labels.
+SF Symbol; selection drives the next placement. An **umbrella** proxy (wide canopy at height)
+was added for the patio use case the strategy centers on.
+- All six kinds are selectable with clear selected state and accessibility labels.
 - Selecting a kind sets `viewModel.selectedKind`; the next placement uses
   `kind.defaultSize` (e.g. pole 0.08×2.5×0.08 m, wall 2.0×1.8×0.15 m).
 - A selected object can be **rotated** (`rotate.right`, +π/8) and **removed**; height edit

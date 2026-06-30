@@ -18,6 +18,7 @@ import simd
 /// axis-aligned box footprint described by width/depth/height in meters.
 enum BlockerKind: String, CaseIterable, Codable, Identifiable {
     case pole
+    case umbrella
     case box
     case wall
     case person
@@ -28,6 +29,7 @@ enum BlockerKind: String, CaseIterable, Codable, Identifiable {
     var displayName: String {
         switch self {
         case .pole: return "Pole"
+        case .umbrella: return "Umbrella"
         case .box: return "Box"
         case .wall: return "Wall"
         case .person: return "Person"
@@ -38,6 +40,7 @@ enum BlockerKind: String, CaseIterable, Codable, Identifiable {
     var systemImage: String {
         switch self {
         case .pole: return "lineweight"
+        case .umbrella: return "umbrella.fill"
         case .box: return "cube"
         case .wall: return "rectangle.portrait"
         case .person: return "figure.stand"
@@ -46,9 +49,12 @@ enum BlockerKind: String, CaseIterable, Codable, Identifiable {
     }
 
     /// Default size in meters: (width along x, height along y, depth along z).
+    /// For the umbrella we model the canopy's span at canopy height, which is
+    /// what actually casts the patio shade the user cares about.
     var defaultSize: SIMD3<Double> {
         switch self {
         case .pole: return SIMD3(0.08, 2.5, 0.08)
+        case .umbrella: return SIMD3(2.4, 2.3, 2.4)
         case .box: return SIMD3(0.5, 0.5, 0.5)
         case .wall: return SIMD3(2.0, 1.8, 0.15)
         case .person: return SIMD3(0.45, 1.75, 0.30)

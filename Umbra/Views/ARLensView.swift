@@ -60,6 +60,10 @@ struct ARLensView: View {
                 bottomControls
             }
             .padding()
+
+            if !settings.hasSeenLensCoach {
+                lensCoachOverlay
+            }
         }
         .background(Color.black)
         .preferredColorScheme(.dark)
@@ -213,6 +217,58 @@ struct ARLensView: View {
         .buttonStyle(.plain)
         .padding(.top, 6)
         .accessibilityHint("Explains how shadows are estimated")
+    }
+
+    // MARK: - First-run trust moment
+
+    /// The "now-shadow matches" coach: the first-minute moment that teaches the
+    /// proxy model and earns trust before the user scrubs to other times.
+    private var lensCoachOverlay: some View {
+        ZStack {
+            Color.black.opacity(0.55).ignoresSafeArea()
+                .onTapGesture { dismissCoach() }
+
+            VStack(spacing: 16) {
+                ZStack {
+                    Circle().fill(UmbraTheme.sunGradient).frame(width: 64, height: 64)
+                    Image(systemName: "sun.max.fill")
+                        .font(.title)
+                        .foregroundStyle(UmbraTheme.indigoDeep)
+                }
+                Text("See it line up first")
+                    .font(.title2.bold())
+                    .foregroundStyle(.white)
+                Text("Place an object next to something real outside — a post, a wall, a chair — then tap **Now**. If the projected shadow lines up with the real one, you can trust where the shade falls at any time you scrub to.")
+                    .font(.subheadline)
+                    .multilineTextAlignment(.center)
+                    .foregroundStyle(.white.opacity(0.82))
+                    .fixedSize(horizontal: false, vertical: true)
+
+                Button {
+                    dismissCoach()
+                } label: {
+                    Text("Got it")
+                        .font(.headline.bold())
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 13)
+                }
+                .buttonStyle(SunButtonStyle())
+                .padding(.top, 4)
+            }
+            .padding(24)
+            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 22))
+            .overlay(RoundedRectangle(cornerRadius: 22).strokeBorder(.white.opacity(0.12)))
+            .padding(32)
+            .accessibilityElement(children: .combine)
+            .accessibilityLabel("See it line up first. Place an object next to something real, then tap Now. If the projected shadow matches the real one, you can trust the shade at any time.")
+        }
+        .transition(.opacity)
+    }
+
+    private func dismissCoach() {
+        let s = settingsRows.first ?? AppSettings.current(in: context)
+        s.hasSeenLensCoach = true
+        try? context.save()
     }
 
     // MARK: - Bottom controls

@@ -103,6 +103,23 @@ final class ARLensViewModelTests: XCTestCase {
         XCTAssertEqual(vm.previewHours, 6, accuracy: 1e-6)
     }
 
+    func testSetToNowMakesPreviewLive() {
+        let vm = makeVM()
+        XCTAssertFalse(vm.isPreviewingNow)  // seeded at 2024 noon
+        vm.setToNow()
+        XCTAssertTrue(vm.isPreviewingNow)
+    }
+
+    func testUmbrellaProxyIsAvailableForPatioPlanning() {
+        let vm = makeVM()
+        vm.selectedKind = .umbrella
+        let id = vm.addBlocker(at: .zero)
+        XCTAssertEqual(vm.blockers[id]?.kind, .umbrella)
+        // A wide canopy at height casts a real footprint of shade.
+        XCTAssertGreaterThan(vm.blockers[id]!.size.x, 1.5)
+        XCTAssertFalse(vm.shadows[id]!.isEmpty)
+    }
+
     func testNightProducesNoShadow() {
         let vm = makeVM()
         let id = vm.addBlocker(at: .zero)

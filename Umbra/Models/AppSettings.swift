@@ -32,6 +32,10 @@ final class AppSettings {
     /// Whether to render the sun-path arc overlay in AR.
     var showSunPath: Bool
 
+    /// Whether the first-run lens coach (the "now-shadow matches" trust moment)
+    /// has been shown. Defaulted so additive SwiftData migration is trivial.
+    var hasSeenLensCoach: Bool = false
+
     init(
         singletonKey: String = "umbra.settings",
         hasCompletedOnboarding: Bool = false,
@@ -40,7 +44,8 @@ final class AppSettings {
         manualLongitude: Double = -122.4194,
         manualLocationName: String = "San Francisco, CA",
         shadowOpacity: Double = 0.5,
-        showSunPath: Bool = true
+        showSunPath: Bool = true,
+        hasSeenLensCoach: Bool = false
     ) {
         self.singletonKey = singletonKey
         self.hasCompletedOnboarding = hasCompletedOnboarding
@@ -50,6 +55,7 @@ final class AppSettings {
         self.manualLocationName = manualLocationName
         self.shadowOpacity = shadowOpacity
         self.showSunPath = showSunPath
+        self.hasSeenLensCoach = hasSeenLensCoach
     }
 }
 

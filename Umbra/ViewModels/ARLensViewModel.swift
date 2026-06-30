@@ -132,6 +132,20 @@ final class ARLensViewModel: ObservableObject {
         recompute()
     }
 
+    /// Jumps the preview to the current instant — the core trust check: place a
+    /// proxy beside a real object, tap Now, and confirm the projected shadow
+    /// lines up with the real one.
+    func setToNow() {
+        previewDate = Date()
+        recompute()
+    }
+
+    /// True when the preview instant is within a couple of minutes of now, so
+    /// the UI can indicate the user is on the live "compare to reality" moment.
+    var isPreviewingNow: Bool {
+        abs(previewDate.timeIntervalSinceNow) < 120
+    }
+
     /// Sets the time-of-day (hours, fractional) keeping the current calendar day.
     func setTimeOfDay(hours: Double) {
         var calendar = Calendar(identifier: .gregorian)

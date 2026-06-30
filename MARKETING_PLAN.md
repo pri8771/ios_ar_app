@@ -23,6 +23,7 @@ _Updated 2026-06-30 to match the shipped product and launch scope, including the
 Umbra makes it simple to visualize how shadows move throughout the day in any outdoor or indoor space. Using AR and sun calculations, instantly preview where shadows will land before building, landscaping, or outdoor planning.
 
 **Unique Selling Points:**
+- See it line up first: place a proxy beside a real object, tap **Now**, and confirm the projected shadow matches the real one before trusting any future time
 - Honest by design: results are an **approximate** planning aid (not a survey), and the app says so up front
 - Fully private, works offline: **no network calls of any kind** — runs entirely on-device, even in airplane mode
 - Local-first: No account, no cloud, no analytics, no developer backend

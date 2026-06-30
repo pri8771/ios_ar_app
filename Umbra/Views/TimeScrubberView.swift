@@ -22,7 +22,7 @@ struct TimeScrubberView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            HStack {
+            HStack(spacing: 8) {
                 DatePicker(
                     "Date",
                     selection: Binding(
@@ -30,6 +30,23 @@ struct TimeScrubberView: View {
                         set: { viewModel.setPreviewDate($0) }),
                     displayedComponents: .date)
                 .labelsHidden()
+
+                Button {
+                    viewModel.setToNow()
+                    Haptics.select()
+                } label: {
+                    Text("Now")
+                        .font(.caption.bold())
+                        .padding(.horizontal, 10).padding(.vertical, 5)
+                        .background(
+                            viewModel.isPreviewingNow
+                                ? AnyShapeStyle(UmbraTheme.sunGradient)
+                                : AnyShapeStyle(Color.secondary.opacity(0.25)),
+                            in: Capsule())
+                        .foregroundStyle(viewModel.isPreviewingNow ? UmbraTheme.indigoDeep : .primary)
+                }
+                .accessibilityLabel("Jump to now")
+                .accessibilityHint("Sets the time to the current moment so you can compare the projected shadow to the real one")
 
                 Spacer()
 

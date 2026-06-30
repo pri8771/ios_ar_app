@@ -142,7 +142,7 @@ final class ARSceneController: NSObject, ObservableObject {
             width: Float(desc.size.x),
             height: Float(desc.size.y),
             depth: Float(desc.size.z),
-            cornerRadius: desc.kind == .pole || desc.kind == .tree ? Float(desc.size.x) / 2 : 0.01)
+            cornerRadius: (desc.kind == .pole || desc.kind == .tree || desc.kind == .umbrella) ? Float(desc.size.x) / 2 : 0.01)
         var material = SimpleMaterial()
         material.color = .init(tint: BlockerStyle.color(for: desc.kind).withAlphaComponent(0.85))
         material.roughness = 0.8
