@@ -5,7 +5,7 @@
          <BuildActionEntry buildForTesting = "YES" buildForRunning = "YES" buildForProfiling = "YES" buildForArchiving = "YES" buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "SL0000000000000000000040"
+               BlueprintIdentifier = "SL000000000000000000004C"
                BuildableName = "Umbra.app"
                BlueprintName = "Umbra"
                ReferencedContainer = "container:Umbra.xcodeproj">
@@ -18,7 +18,7 @@
          <TestableReference skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "SL0000000000000000000041"
+               BlueprintIdentifier = "SL000000000000000000004D"
                BuildableName = "UmbraTests.xctest"
                BlueprintName = "UmbraTests"
                ReferencedContainer = "container:Umbra.xcodeproj">
@@ -30,7 +30,7 @@
       <BuildableProductRunnable runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "SL0000000000000000000040"
+            BlueprintIdentifier = "SL000000000000000000004C"
             BuildableName = "Umbra.app"
             BlueprintName = "Umbra"
             ReferencedContainer = "container:Umbra.xcodeproj">
@@ -41,7 +41,7 @@
       <BuildableProductRunnable runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "SL0000000000000000000040"
+            BlueprintIdentifier = "SL000000000000000000004C"
             BuildableName = "Umbra.app"
             BlueprintName = "Umbra"
             ReferencedContainer = "container:Umbra.xcodeproj">

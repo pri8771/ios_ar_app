@@ -1,6 +1,6 @@
 # Umbra Privacy Policy
 
-_Updated 2026-06-30 to match the shipped product and launch scope. See LAUNCH_READINESS.md._
+_Updated 2026-06-30 to match the shipped product and launch scope, including the decision to remove all network calls. See LAUNCH_READINESS.md._
 
 **Effective Date:** June 2026
 **Last Updated:** 2026-06-30
@@ -9,13 +9,14 @@ _Updated 2026-06-30 to match the shipped product and launch scope. See LAUNCH_RE
 
 Umbra is a local-first AR sun & shade planner. Your plans, object placements, and settings
 are stored **only on your device**. Umbra has no account system, no analytics, no ads, and
-no developer-operated backend, and we (the developer) never receive your data.
+no developer-operated backend, and we (the developer) never receive your data. Umbra makes
+**no network requests of any kind** and works fully offline, even in airplane mode.
 
 > **Correction note.** A previous version of this policy stated that location was "not
-> collected or used" and that the app "runs completely offline." That was inaccurate. Umbra
-> **does** use your device location (foreground only) to compute the sun's position, and it
-> uses Apple's geocoding service to display a place name. This policy has been corrected to
-> describe the app as it actually behaves.
+> collected or used." That was inaccurate: Umbra **does** use your device location
+> (foreground only) to compute the sun's position **on-device**. This policy has been
+> corrected to describe the app as it actually behaves. Note that your location is used
+> purely for local solar math — it is never transmitted off the device.
 
 ## Data We Process
 
@@ -27,11 +28,11 @@ no developer-operated backend, and we (the developer) never receive your data.
 ### Location data (foreground only)
 - With your permission, Umbra uses your device location **only while the app is open**
   ("When In Use") to compute the sun's position for your place and time.
-- Your coordinates are used **on-device** for the solar math. Umbra does **not** upload your
-  location to any developer server, and there is no account to attach it to.
-- **Geocoding:** to show a friendly place name (e.g. "San Francisco, CA"), Umbra asks
-  Apple's CoreLocation geocoding service to convert coordinates to a name. This request is
-  handled by Apple under Apple's privacy terms; Umbra does not store or transmit it elsewhere.
+- Your coordinates are used **on-device** for the solar math and are **never transmitted** —
+  not to a developer server, not to Apple, not to anyone. There is no account to attach them
+  to, and the app makes no network requests at all.
+- The device's GPS fix is simply labelled "Current Location"; the app performs no online
+  place-name lookup. If you enter a **manual location**, the name you provide is used.
 - You can decline location entirely and enter a **manual location** instead; the app remains
   fully functional.
 
@@ -54,8 +55,8 @@ no developer-operated backend, and we (the developer) never receive your data.
 ## Third-Party Services
 Umbra does **not** use analytics (e.g. Google Analytics, Mixpanel), crash reporting (e.g.
 Sentry, Firebase Crashlytics), advertising networks, social SDKs, or any developer-operated
-cloud storage or sync. The only platform services used are Apple's on-device ARKit/CoreLocation
-and Apple's geocoding lookup described above.
+cloud storage or sync. The only platform services used are Apple's **on-device**
+ARKit/CoreLocation, which run entirely on your device. Umbra makes no network requests.
 
 ## Permissions
 - **Camera** — to show the AR view and detect the ground plane. On-device only.

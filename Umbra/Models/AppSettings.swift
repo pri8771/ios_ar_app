@@ -54,6 +54,18 @@ final class AppSettings {
 }
 
 extension AppSettings {
+    /// Default manual location (San Francisco) used before the user sets one.
+    static let defaultLatitude = 37.7749
+    static let defaultLongitude = -122.4194
+
+    /// True when the manual fallback is still the untouched San Francisco
+    /// default, so the app can nudge the user to set their real location rather
+    /// than silently computing shade for the wrong place.
+    var isManualLocationDefault: Bool {
+        abs(manualLatitude - Self.defaultLatitude) < 0.0001
+            && abs(manualLongitude - Self.defaultLongitude) < 0.0001
+    }
+
     /// Fetches the single settings row, creating it if needed.
     static func current(in context: ModelContext) -> AppSettings {
         let descriptor = FetchDescriptor<AppSettings>()

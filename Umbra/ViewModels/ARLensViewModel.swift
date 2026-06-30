@@ -210,4 +210,33 @@ final class ARLensViewModel: ObservableObject {
         return String(format: "Sun: %.0f° elevation, %.0f° azimuth",
                       sunPosition.elevation, sunPosition.azimuth)
     }
+
+    /// Height (meters) of the currently selected blocker, if any.
+    var selectedHeight: Double? {
+        guard let id = selectedBlockerID else { return nil }
+        return blockers[id]?.size.y
+    }
+
+    // MARK: - Export stamp strings
+
+    /// Preview date + time formatted in the plan's time zone.
+    var previewDateTimeString: String {
+        let f = DateFormatter()
+        f.timeZone = timeZone
+        f.dateFormat = "MMM d, yyyy · h:mm a"
+        return f.string(from: previewDate)
+    }
+
+    /// Self-contained "lat, lon" label (no online place-name lookup).
+    var locationCoordString: String {
+        String(format: "%.3f, %.3f", latitude, longitude)
+    }
+
+    /// Compact sun-geometry summary for the export footer.
+    var sunSummaryString: String {
+        if let day = solarDay, day.isPolarNight { return "Polar night" }
+        if sunPosition.elevation <= 0 { return "Sun below horizon" }
+        return String(format: "Sun %.0f° up · %.0f° az",
+                      sunPosition.elevation, sunPosition.azimuth)
+    }
 }

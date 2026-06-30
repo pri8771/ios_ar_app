@@ -9,15 +9,24 @@
 > result **approximate**. Primary user: homeowners and outdoor-space planners deciding
 > "where will the shade be at 4pm?" for patios, gardens, and solar/planting decisions.
 >
-> **Implementation maturity: working SwiftUI app + unit tests (Building, near MVP).**
-> The repo contains a real Xcode project (27 Swift source files, ~3.4k LOC) with a
-> complete MVVM architecture, ARKit/RealityKit device path, a fully-functional
-> simulator/preview ("mock") path, SwiftData persistence, foreground CoreLocation,
-> share/export, and 3 XCTest suites covering the solar and shadow math. The core loop
-> runs end-to-end **in the preview path today**; the on-device AR path is implemented
-> but **unverified on hardware**, which is the dominant launch risk. Not yet building
-> for App Store because of a missing app icon image, a missing privacy manifest, and
-> three legal/marketing docs that contradict the actual code.
+> **Implementation maturity: working SwiftUI app + unit tests (near launch; one hardware gate remains).**
+> The repo contains a real Xcode project (~30 Swift source files) with a complete MVVM
+> architecture, ARKit/RealityKit device path, a fully-functional simulator/preview ("mock")
+> path, SwiftData persistence, foreground CoreLocation, share/export, and 5 XCTest suites
+> (solar math, shadow geometry, the lens view model, and SwiftData persistence). The core
+> loop runs end-to-end **in the preview path today**; the on-device AR path is implemented
+> but **unverified on hardware**, which is now the single dominant launch risk.
+>
+> **Update (2026-06-30 iteration).** All submission and truth-debt blockers are cleared:
+> a designed app icon is in place (BLK-2), a `PrivacyInfo.xcprivacy` manifest declares no
+> tracking / no collection (BLK-5), the app is now **truly offline** — reverse-geocoding was
+> removed so there are no network calls of any kind (BLK-3) — and the privacy policy, terms,
+> README, and marketing copy were reconciled to the shipped app, dropping "accurate"/Premium
+> claims (BLK-4, BLK-6). The lens gained an honest stamped export, a height slider, a
+> "re-detect ground" affordance, a first-use location nudge, haptics, and a cohesive brand
+> design system; shadow legibility was tuned for outdoor light. CI (GitHub Actions) builds and
+> tests on every push. **The only remaining launch gate is BLK-1: on-device AR validation on
+> real hardware**, which cannot be done from source alone.
 
 ---
 
@@ -422,15 +431,19 @@ reconciliation + the §9 store/privacy/content items. F15 is intentionally not a
 
 ## 8. Production-Readiness Assessment
 
-### Current estimated readiness: **62%**
-Justification: the architecture is complete and clean, the math is correct and **unit-tested**,
-and the **planning loop runs end-to-end today in the preview path** (place → scrub → see
-shadows → export → persist). That is a real, demonstrable product. The 38% gap is concentrated
-and well-defined: (1) the on-device AR path is entirely **unverified on hardware** — the single
-biggest unknown; (2) **submission blockers** (icon, privacy manifest); and (3) **truth/copy
-debt** — three docs (privacy policy, terms, marketing) and one in-app claim contradict the
-actual code (geocoding/network, "accurate," Premium). None of these require architectural
-change, which is why readiness is well above 50% despite real blockers.
+### Current estimated readiness: **~85%**
+Justification: the architecture is complete and clean, the math is correct and **unit-tested**
+(56 tests across 5 suites, now including the lens view model and SwiftData persistence), and the
+**planning loop runs end-to-end today in the preview path** (place → scrub → see shadows →
+stamped export → persist). As of the 2026-06-30 iteration, every submission blocker and all
+truth/copy debt is resolved: app icon (BLK-2), privacy manifest (BLK-5), a genuinely
+**offline** app with no network calls (BLK-3), and privacy/terms/README/marketing reconciled to
+the shipped app (BLK-4, BLK-6). Fast-follow polish landed too: stamped export (NB-2), height
+slider (NB-4), re-detect ground (NB-5), location nudge (NB-1), haptics, a brand design system,
+outdoor shadow-legibility tuning, and CI. The remaining ~15% is essentially **one gate**: the
+on-device AR path (BLK-1) is implemented but **unverified on real hardware** — plane reliability,
+tracking drift, and shadow legibility in bright sun must be confirmed on ≥2 devices before
+TestFlight. That verification (not more code) is what stands between this and ~95% launch-ready.
 
 ### Ordered checklist to reach 80–90% production-ready
 1. **Run the on-device AR validation matrix (BLK-1).** Patio/balcony first; lighting
@@ -468,35 +481,39 @@ change, which is why readiness is well above 50% despite real blockers.
 ## 9. Launch Checklist (Umbra-specific)
 
 **App Store / build**
-- [ ] **BLK-2** Provide the 1024×1024 (and required sizes) **AppIcon** PNG(s).
-- [ ] Confirm `Umbra.xcodeproj` builds & tests pass for a real-device destination and an
-      iOS 17 simulator; re-run `scripts/generate_project.py` after any file changes.
+- [x] **BLK-2** 1024×1024 **AppIcon** added (`Umbra/Assets.xcassets/AppIcon.appiconset/AppIcon-1024.png`,
+      generated reproducibly by `scripts/make_icon.py`).
+- [x] `Umbra.xcodeproj` builds & **56 tests pass** on the iOS 17+ simulator; project re-generated
+      via `scripts/generate_project.py`. (Real-device destination still to be run as part of BLK-1.)
 - [ ] App Store Connect record: name "Umbra", subtitle (no "accurate"), category Utilities
-      (secondary Lifestyle/Photography), 5 screenshots + the 30s preview from real device AR.
-- [ ] **Age rating 4+**; no UGC, no objectionable content.
+      (secondary Lifestyle/Photography), 5 screenshots + the 30s preview from real device AR. *(off-repo)*
+- [ ] **Age rating 4+**; no UGC, no objectionable content. *(off-repo, set in App Store Connect)*
 
 **Privacy**
-- [ ] **BLK-5** Add `PrivacyInfo.xcprivacy`: `NSPrivacyTracking=false`, empty tracking
-      domains, **no collected data types**, declare any required-reason APIs in use.
-- [ ] **BLK-4** Rewrite `PRIVACY_POLICY.md` to match the app (foreground location used
-      on-device for solar math; geocoding per BLK-3); fix the `ios_ar_app` URL.
-- [ ] App Privacy "nutrition label" in App Store Connect: **Data Not Collected** (verify
-      after BLK-3 — geocoding still goes to Apple, not to the developer).
-- [ ] Verify `NSCameraUsageDescription` and `NSLocationWhenInUseUsageDescription` strings
-      (present in `Info.plist`) read accurately post-reconciliation.
+- [x] **BLK-5** `PrivacyInfo.xcprivacy` added: `NSPrivacyTracking=false`, empty tracking domains,
+      **no collected data types**, no required-reason APIs used. Bundled in the app target.
+- [x] **BLK-4** `PRIVACY_POLICY.md` rewritten to match the app (foreground location used on-device
+      for solar math; no network); `ios_ar_app` URL fixed.
+- [ ] App Privacy "nutrition label" in App Store Connect: **Data Not Collected** (now fully accurate —
+      no geocoding, no network). *(off-repo)*
+- [x] `NSCameraUsageDescription` and `NSLocationWhenInUseUsageDescription` strings read accurately.
 
 **Safety / content / accuracy**
-- [ ] **BLK-6** Marketing/description: remove "accurate," remove "Premium," lead with the
-      **approximate** framing; ensure metadata matches the shipped (free) app (2.3.x).
-- [ ] Confirm the in-app **"approximate"** banner + About-Accuracy copy are present in the
-      build (F10) and the disclaimer in `TERMS_OF_SERVICE` §4 is intact (clean up NB-3).
-- [ ] **BLK-3** Resolve the network/geocoding claim and make all "no network" copy true.
+- [x] **BLK-6** Marketing/description: removed "accurate," removed "Premium," lead with the
+      **approximate** framing; metadata matches the shipped (free) app.
+- [x] In-app **"approximate"** banner + About-Accuracy copy present (F10); `TERMS_OF_SERVICE` §4
+      disclaimer intact and well-formed (NB-3 resolved).
+- [x] **BLK-3** Resolved: reverse-geocoding removed; the app makes **no network requests** and all
+      "no network / works offline" copy is now true.
 
 **Functional gate**
-- [ ] **BLK-1** On-device AR validation matrix passed on ≥2 devices; shadow legible in
-      bright sun; projected ≈ real shadow at current time.
-- [ ] Permission-denied path verified (manual location + Open-Settings deep link).
-- [ ] Persistence round-trip verified (reopen a saved plan reproduces objects/time/location).
+- [ ] **BLK-1** On-device AR validation matrix on ≥2 devices; shadow legible in bright sun;
+      projected ≈ real shadow at current time. *(the one remaining gate — needs hardware; shadow
+      overlay already tuned toward a deep-indigo tint + warm rim for outdoor legibility.)*
+- [x] Permission-denied path implemented (manual location + Open-Settings deep link + first-use
+      nudge); verified in the preview path. *(re-confirm on device under BLK-1.)*
+- [x] Persistence round-trip **unit-tested** (`ARLensViewModelTests.testPersistRoundTrip`).
 
 **Nice-to-have before 1.0 (non-gating)**
-- [ ] NB-1 location nudge · NB-2 stamped export · NB-4 height slider decision · CI smoke build.
+- [x] NB-1 location nudge · NB-2 stamped export · NB-4 height slider · NB-5 re-detect ground ·
+      haptics · brand design system · CI smoke build — all landed.

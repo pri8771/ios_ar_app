@@ -1,15 +1,15 @@
 # Umbra Marketing & Launch Plan
 
-_Updated 2026-06-30 to match the shipped product and launch scope. See LAUNCH_READINESS.md._
+_Updated 2026-06-30 to match the shipped product and launch scope, including the decision to remove all network calls. See LAUNCH_READINESS.md._
 
 > **Copy accuracy gate (read before publishing any store metadata).** Umbra is
 > **approximate by design** and **free** (no in-app purchases exist in the app). Do **not**
 > use "accurate," "precise," or "real physics … accurate" in store-facing copy, and do
 > **not** advertise a "Premium" tier in v1 — it is not built. Lead with the honest,
-> local-first, approximate framing. Also note the app makes one Apple geocoding network
-> call (place-name lookup), so avoid absolute "no network / fully offline" claims until
-> reconciled. See LAUNCH_READINESS.md §7 (BLK-3, BLK-6). The audience, channel, ASO, and
-> timeline sections below remain useful directionally.
+> local-first, approximate framing. Umbra makes **no network calls of any kind** and works
+> fully offline (even in airplane mode), so "fully private / works offline" claims are
+> accurate and should be used. See LAUNCH_READINESS.md §7 (BLK-6). The audience, channel,
+> ASO, and timeline sections below remain useful directionally.
 
 **Launch Target:** July 2026
 **Platforms:** iOS App Store
@@ -23,12 +23,13 @@ _Updated 2026-06-30 to match the shipped product and launch scope. See LAUNCH_RE
 Umbra makes it simple to visualize how shadows move throughout the day in any outdoor or indoor space. Using AR and sun calculations, instantly preview where shadows will land before building, landscaping, or outdoor planning.
 
 **Unique Selling Points:**
+- Honest by design: results are an **approximate** planning aid (not a survey), and the app says so up front
+- Fully private, works offline: **no network calls of any kind** — runs entirely on-device, even in airplane mode
 - Local-first: No account, no cloud, no analytics, no developer backend
 - Instant AR visualization - point and plan
-- Real solar math: physically-grounded sun position from your date/time/location (results are an **approximate** planning aid, not a survey)
-- Honest by design: clearly labels every result as approximate
+- Real solar math: physically-based sun position from your date/time/location, clearly labeled approximate
 - Works on AR-capable iPhones; a preview mode lets you plan even without AR
-- Privacy-focused: camera frames are processed on-device and never uploaded
+- Privacy-focused: camera frames and location are processed on-device and never uploaded
 
 ## Target Audience
 
@@ -41,7 +42,7 @@ Umbra makes it simple to visualize how shadows move throughout the day in any ou
 ### Secondary Audience (30% of users)
 - **Architects & Landscape Designers** aged 25-55
 - Using apps for on-site client consultations
-- Value accuracy and professional presentation
+- Value clear, professional presentation for quick on-site illustration (not survey-grade output)
 - Early AR adopters
 
 ### Tertiary Audience (20% of users)
@@ -114,9 +115,9 @@ Use Umbra to:
 ✓ Brief clients on property shadows
 ✓ Explore AR technology
 
-No accounts. No tracking. No servers. All shadow calculations happen locally on your device—completely private.
+No accounts. No tracking. No servers. No network calls of any kind—every shadow calculation happens locally on your device, so Umbra works fully offline (even in airplane mode) and stays completely private.
 
-Umbra uses simplified physics-based calculations suitable for planning reference. Not for professional surveying or critical construction decisions.
+Umbra uses simplified, physically-based calculations as an approximate planning aid. Results are clearly labeled approximate and are not for professional surveying or critical construction decisions.
 
 Works on iPhone 12 and newer with ARKit support."
 
@@ -133,23 +134,10 @@ Works on iPhone 12 and newer with ARKit support."
 4. Indoor space with AR detection
 5. Day vs. evening shadow comparison
 
-## Pricing & Monetization
+## Pricing
 
-**Strategy:** Free with optional Premium tier
-
-**Free Version Includes:**
-- Full AR visualization
-- Time scrubbing throughout the day
-- Unlimited objects
-- All core features
-
-**Premium (Optional, $4.99/month or $39.99/year):**
-- Future: Advanced analytics
-- Future: Custom date ranges
-- Future: Export capabilities
-- Early adoption pricing: Free for first 1000 users
-
-**Rationale:** Premium is nice-to-have future tier; free version is fully functional today.
+**Free, no in-app purchases, no subscriptions, no ads.** v1 ships free and fully-functional —
+AR visualization, time scrubbing, unlimited objects, and export are all included with no paywall.
 
 ## Success Metrics
 
@@ -189,7 +177,7 @@ Works on iPhone 12 and newer with ARKit support."
 - **Week 4:** App Store review & approval
 - **Week 5:** Soft launch to beta testers
 - **Week 6-10:** Organic marketing, community engagement
-- **Week 11+:** Monitor, respond to feedback, plan Premium features
+- **Week 11+:** Monitor, respond to feedback, plan future free updates
 
 ## Summary
 

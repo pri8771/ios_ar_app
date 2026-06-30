@@ -5,6 +5,12 @@
 //  Foreground-only CoreLocation wrapper. Location is used solely to compute
 //  solar position locally; it is never transmitted anywhere.
 //
+//  Umbra makes NO network requests of any kind — it works fully offline, even
+//  in airplane mode. We deliberately do NOT reverse-geocode the device fix to a
+//  place name, because that would be an online lookup. The live fix is simply
+//  labelled "Current Location"; users who want a named place can enter a manual
+//  location in Settings.
+//
 
 import Foundation
 import CoreLocation
@@ -40,11 +46,8 @@ final class LocationService: NSObject, ObservableObject {
 
     @Published private(set) var state: LocationState = .notDetermined
     @Published private(set) var lastLocation: CLLocation?
-    @Published private(set) var placemarkName: String?
 
     private let manager = CLLocationManager()
-    private let geocoder = CLGeocoder()
-    private var hasRequestedThisSession = false
 
     override init() {
         super.init()
@@ -84,6 +87,10 @@ final class LocationService: NSObject, ObservableObject {
         manager.startUpdatingLocation()
     }
 
+    /// A human label for the live fix. We do not reverse-geocode (that would be
+    /// an online request), so the live fix is simply "Current Location".
+    var liveLocationLabel: String { "Current Location" }
+
     private func syncState(for status: CLAuthorizationStatus) {
         switch status {
         case .notDetermined:
@@ -103,15 +110,6 @@ final class LocationService: NSObject, ObservableObject {
         }
     }
 
-    private func reverseGeocode(_ location: CLLocation) {
-        geocoder.reverseGeocodeLocation(location) { [weak self] placemarks, _ in
-            guard let self else { return }
-            if let p = placemarks?.first {
-                let parts = [p.locality, p.administrativeArea, p.country].compactMap { $0 }
-                self.placemarkName = parts.isEmpty ? nil : parts.joined(separator: ", ")
-            }
-        }
-    }
 }
 
 extension LocationService: CLLocationManagerDelegate {
@@ -129,7 +127,6 @@ extension LocationService: CLLocationManagerDelegate {
         Task { @MainActor in
             self.lastLocation = loc
             self.state = .authorized(loc)
-            self.reverseGeocode(loc)
         }
     }
 

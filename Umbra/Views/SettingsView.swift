@@ -9,6 +9,7 @@
 
 import SwiftUI
 import SwiftData
+import CoreLocation
 
 #if canImport(UIKit)
 import UIKit
@@ -68,8 +69,8 @@ struct SettingsView: View {
 
     @ViewBuilder private var locationStatusRow: some View {
         switch locationService.state {
-        case .authorized:
-            Label(locationService.placemarkName ?? "Using current location", systemImage: "location.fill")
+        case let .authorized(loc):
+            Label("Using current location · \(Self.coordLabel(loc))", systemImage: "location.fill")
                 .foregroundStyle(.green)
         case .authorizedNoFix:
             Label("Acquiring location…", systemImage: "location")
@@ -152,11 +153,21 @@ struct SettingsView: View {
     // MARK: Privacy
 
     private var privacySection: some View {
-        Section("Privacy") {
+        Section {
             Label("No account, no cloud, no analytics", systemImage: "lock.shield")
             Label("All plans stored on this device", systemImage: "iphone")
-            Label("No network requests", systemImage: "wifi.slash")
+            Label("No network — works in airplane mode", systemImage: "airplane")
+            Label("Location stays on device, never sent", systemImage: "location.slash")
+        } header: {
+            Text("Privacy")
+        } footer: {
+            Text("Umbra makes no network requests of any kind. Your camera, location, and plans never leave this iPhone.")
         }
+    }
+
+    /// Compact "lat, lon" label for the live fix (no online place-name lookup).
+    static func coordLabel(_ loc: CLLocation) -> String {
+        String(format: "%.3f, %.3f", loc.coordinate.latitude, loc.coordinate.longitude)
     }
 
     private var aboutSection: some View {

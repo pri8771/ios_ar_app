@@ -49,7 +49,7 @@ struct MockSceneView: View {
 
     private var background: some View {
         LinearGradient(
-            colors: [Color(white: 0.20), Color(white: 0.10)],
+            colors: [Color(hex: 0x1A1640), Color(hex: 0x0E0B22)],
             startPoint: .top, endPoint: .bottom)
         .ignoresSafeArea()
     }
@@ -89,8 +89,10 @@ struct MockSceneView: View {
                 if i == 0 { path.move(to: pt) } else { path.addLine(to: pt) }
             }
             path.closeSubpath()
-            ctx.fill(path, with: .color(.black.opacity(0.45)))
-            ctx.stroke(path, with: .color(.black.opacity(0.6)), lineWidth: 1)
+            // Deep indigo fill with a soft warm rim so the shadow reads clearly
+            // against the ground — matching the on-device legibility tuning.
+            ctx.fill(path, with: .color(Color(hex: 0x05040F).opacity(0.62)))
+            ctx.stroke(path, with: .color(UmbraTheme.sun.opacity(0.5)), lineWidth: 1.5)
         }
     }
 
@@ -135,6 +137,7 @@ struct MockSceneView: View {
         let x = (Double(location.x) - Double(center.x)) / scale
         let z = (Double(location.y) - Double(center.y)) / scale
         viewModel.addBlocker(at: SIMD3<Double>(x, viewModel.planeHeight, z))
+        Haptics.place()
     }
 }
 

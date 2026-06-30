@@ -33,21 +33,24 @@ def swift_files(rel_dir):
 app_sources = swift_files(APP_NAME)
 test_sources = swift_files(TEST_NAME)
 
-# Assets + Info.plist
+# Assets + Info.plist + privacy manifest
 assets_rel = os.path.join(APP_NAME, "Assets.xcassets")
 info_rel = os.path.join(APP_NAME, "Resources", "Info.plist")
+privacy_rel = os.path.join(APP_NAME, "PrivacyInfo.xcprivacy")
 
 # --- Allocate IDs -----------------------------------------------------------
 file_ref = {}       # rel path -> file reference id
 build_file = {}     # (rel path, target) -> build file id
 
-for p in app_sources + test_sources + [assets_rel]:
+for p in app_sources + test_sources + [assets_rel, privacy_rel]:
     file_ref[p] = uid()
 
 assets_build = uid()
+privacy_build = uid()
 for p in app_sources:
     build_file[(p, "app")] = uid()
 build_file[(assets_rel, "app")] = assets_build
+build_file[(privacy_rel, "app")] = privacy_build
 for p in test_sources:
     build_file[(p, "test")] = uid()
 
@@ -102,6 +105,7 @@ for p in app_sources:
     bid = build_file[(p, "app")]
     w(f"\t\t{bid} /* {os.path.basename(p)} in Sources */ = {{isa = PBXBuildFile; fileRef = {file_ref[p]} /* {os.path.basename(p)} */; }};")
 w(f"\t\t{assets_build} /* Assets.xcassets in Resources */ = {{isa = PBXBuildFile; fileRef = {file_ref[assets_rel]} /* Assets.xcassets */; }};")
+w(f"\t\t{privacy_build} /* PrivacyInfo.xcprivacy in Resources */ = {{isa = PBXBuildFile; fileRef = {file_ref[privacy_rel]} /* PrivacyInfo.xcprivacy */; }};")
 for p in test_sources:
     bid = build_file[(p, "test")]
     w(f"\t\t{bid} /* {os.path.basename(p)} in Sources */ = {{isa = PBXBuildFile; fileRef = {file_ref[p]} /* {os.path.basename(p)} */; }};")
@@ -136,6 +140,7 @@ for p in app_sources + test_sources:
     rel = group_relative_path(p)
     w(f"\t\t{file_ref[p]} /* {name} */ = {{isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = {rel}; sourceTree = \"<group>\"; }};")
 w(f"\t\t{file_ref[assets_rel]} /* Assets.xcassets */ = {{isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = \"<group>\"; }};")
+w(f"\t\t{file_ref[privacy_rel]} /* PrivacyInfo.xcprivacy */ = {{isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = PrivacyInfo.xcprivacy; sourceTree = \"<group>\"; }};")
 w(f"\t\t{uid()} /* Info.plist placeholder */ = {{isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = \"<group>\"; }};")
 w(f"\t\t{app_product} /* {APP_NAME}.app */ = {{isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = {APP_NAME}.app; sourceTree = BUILT_PRODUCTS_DIR; }};")
 w(f"\t\t{test_product} /* {TEST_NAME}.xctest */ = {{isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = {TEST_NAME}.xctest; sourceTree = BUILT_PRODUCTS_DIR; }};")
@@ -161,6 +166,7 @@ w("/* End PBXFrameworksBuildPhase section */")
 def group_children_app():
     ids = [file_ref[p] for p in app_sources]
     ids.append(file_ref[assets_rel])
+    ids.append(file_ref[privacy_rel])
     return ids
 
 w("\n/* Begin PBXGroup section */")
@@ -290,6 +296,7 @@ w("\t\t\tisa = PBXResourcesBuildPhase;")
 w("\t\t\tbuildActionMask = 2147483647;")
 w("\t\t\tfiles = (")
 w(f"\t\t\t\t{assets_build} /* Assets.xcassets in Resources */,")
+w(f"\t\t\t\t{privacy_build} /* PrivacyInfo.xcprivacy in Resources */,")
 w("\t\t\t);")
 w("\t\t\trunOnlyForDeploymentPostprocessing = 0;")
 w("\t\t};")

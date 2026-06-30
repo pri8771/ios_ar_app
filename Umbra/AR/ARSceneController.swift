@@ -82,6 +82,15 @@ final class ARSceneController: NSObject, ObservableObject {
         arView.session.pause()
     }
 
+    /// Releases the locked ground plane so the next detected horizontal surface
+    /// re-locks. Non-destructive: the world map, tracking, and any placed
+    /// objects are preserved (the first plane is otherwise kept for the session).
+    func resetGround() {
+        planeAnchor = nil
+        hasPlaneAnchor = false
+        planeHeight = 0
+    }
+
     private func installTapGesture() {
         // Avoid stacking gesture recognizers across restarts.
         arView.gestureRecognizers?.forEach { arView.removeGestureRecognizer($0) }
@@ -154,7 +163,9 @@ final class ARSceneController: NSObject, ObservableObject {
             shadowEntities[id]?.removeFromParent()
             shadowEntities.removeValue(forKey: id)
             guard let mesh = ShadowMeshFactory.mesh(for: poly) else { continue }
-            var material = UnlitMaterial(color: .black)
+            // Deep indigo rather than pure black: reads more clearly than a flat
+            // black overlay against grass and concrete in bright outdoor light.
+            var material = UnlitMaterial(color: UIColor(red: 0.05, green: 0.04, blue: 0.16, alpha: 1.0))
             material.blending = .transparent(opacity: .init(floatLiteral: Float(opacity)))
             let entity = ModelEntity(mesh: mesh, materials: [material])
             // Lift very slightly to avoid z-fighting with the plane.

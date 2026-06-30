@@ -1,6 +1,6 @@
 # Umbra
 
-_Updated 2026-06-30 to match the shipped product and launch scope. See [LAUNCH_READINESS.md](LAUNCH_READINESS.md)._
+_Updated 2026-06-30 to match the shipped product and launch scope, including the decision to remove all network calls. See [LAUNCH_READINESS.md](LAUNCH_READINESS.md)._
 
 **Point your camera, drop a simple object, scrub the time, and see where shade will land.**
 
@@ -16,17 +16,14 @@ where shadows fall throughout the day.
 
 ## Privacy & local-first guarantees
 
+- ✅ **No network calls anywhere — works fully offline, even in airplane mode.**
 - ✅ Fully on-device. **No backend, no accounts, no analytics, no cloud sync.**
 - ✅ **No third-party packages.**
 - ✅ All projects are stored locally via **SwiftData**.
 - ✅ Location is used **only in the foreground**, **only on-device**, to compute
-  the sun's position. It is never stored off-device or sent to any developer server.
-- ⚠️ **One platform network touch:** to display a friendly place name, the app uses
-  Apple's CoreLocation **reverse geocoding** (`CLGeocoder`), which is an online lookup
-  handled by Apple. This is the only outbound network call. It must be reconciled with
-  the "no network" copy before launch (disclose or disable) — see
-  [LAUNCH_READINESS.md](LAUNCH_READINESS.md) §7, BLK-3. The solar math itself is fully
-  offline.
+  the sun's position. Your coordinates never leave the device and are never sent to
+  any server — Apple's or ours. The device's GPS fix is simply labelled
+  "Current Location"; manual locations keep the name you enter.
 
 ## Requirements
 
@@ -77,8 +74,16 @@ Umbra/
 ├── ViewModels/          ARLensViewModel – working scene state + recompute
 ├── Views/               Onboarding, Projects library, AR lens, scrubber,
 │                        sun-path, palette, settings, mock preview
-└── Utilities/           Geometry (convex hull), styling, share sheet
+├── Utilities/           Geometry (convex hull), UmbraTheme (brand palette +
+│                        gradients), BlockerStyle, ShareSheet, SnapshotStamp
+│                        (honest export footer), Haptics
+└── PrivacyInfo.xcprivacy   Privacy manifest: no tracking, no data collection
 ```
+
+The app icon is generated reproducibly from code by
+[`scripts/make_icon.py`](scripts/make_icon.py) (a sundial gnomon casting its
+shadow — the *umbra* — under a twilight-to-gold sky). CI builds and runs the
+tests on every push via [`.github/workflows/ci.yml`](.github/workflows/ci.yml).
 
 ### Solar math
 
@@ -118,7 +123,7 @@ charts, and full dark-mode support.
 
 ## Tests
 
-Core math is covered by XCTest unit tests:
+56 XCTest unit tests across five suites (run with `xcodebuild ... test`):
 
 - `SunPositionServiceTests` – Julian day anchors, declination/elevation/azimuth,
   refraction, world-direction vector.
@@ -126,6 +131,10 @@ Core math is covered by XCTest unit tests:
   shadow polygons for known sun geometries.
 - `SolarDayServiceTests` – sunrise/noon/sunset ordering, day length, polar
   day/night, sun-path sampling.
+- `ARLensViewModelTests` – placement/selection/rotation/height, time scrubbing,
+  loading persisted blockers, and a SwiftData persist → reload round-trip.
+- `ModelTests` – settings singleton, manual-location-default detection (drives
+  the location nudge), cascade delete, and blocker-kind round-tripping.
 
 ## Out of v1 scope (explicit limitations, not TODOs)
 

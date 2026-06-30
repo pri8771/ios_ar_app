@@ -171,6 +171,16 @@ struct ARLensView: View {
                 } label: {
                     Label("Share Snapshot", systemImage: "square.and.arrow.up")
                 }
+                #if canImport(ARKit) && !targetEnvironment(simulator)
+                if ARSupport.isWorldTrackingSupported {
+                    Button {
+                        arController.resetGround()
+                        viewModel.planeHeight = 0
+                    } label: {
+                        Label("Re-detect Ground", systemImage: "arrow.triangle.2.circlepath")
+                    }
+                }
+                #endif
                 Button(role: .destructive) {
                     viewModel.removeAll()
                 } label: {
@@ -224,23 +234,43 @@ struct ARLensView: View {
     }
 
     private func selectedObjectControls(id: UUID) -> some View {
-        HStack(spacing: 12) {
-            Image(systemName: viewModel.blockers[id]?.kind.systemImage ?? "cube")
-            Text(viewModel.blockers[id]?.kind.displayName ?? "Object")
-                .font(.subheadline.bold())
-            Spacer()
-            Button {
-                viewModel.rotateSelected(by: .pi / 8)
-            } label: {
-                Image(systemName: "rotate.right")
+        VStack(spacing: 10) {
+            HStack(spacing: 12) {
+                Image(systemName: viewModel.blockers[id]?.kind.systemImage ?? "cube")
+                Text(viewModel.blockers[id]?.kind.displayName ?? "Object")
+                    .font(.subheadline.bold())
+                Spacer()
+                Button {
+                    viewModel.rotateSelected(by: .pi / 8)
+                    Haptics.select()
+                } label: {
+                    Image(systemName: "rotate.right")
+                }
+                .accessibilityLabel("Rotate object")
+                Button(role: .destructive) {
+                    viewModel.removeBlocker(id)
+                    Haptics.select()
+                } label: {
+                    Image(systemName: "trash")
+                }
+                .accessibilityLabel("Remove object")
             }
-            .accessibilityLabel("Rotate object")
-            Button(role: .destructive) {
-                viewModel.removeBlocker(id)
-            } label: {
-                Image(systemName: "trash")
+
+            HStack(spacing: 10) {
+                Image(systemName: "arrow.up.and.down")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                Slider(value: Binding(
+                    get: { viewModel.selectedHeight ?? 1.0 },
+                    set: { viewModel.setHeightForSelected($0) }),
+                    in: 0.3...6.0)
+                Text(String(format: "%.1f m", viewModel.selectedHeight ?? 0))
+                    .font(.caption.monospacedDigit())
+                    .frame(width: 50, alignment: .trailing)
             }
-            .accessibilityLabel("Remove object")
+            .accessibilityElement(children: .combine)
+            .accessibilityLabel("Object height")
+            .accessibilityValue(String(format: "%.1f meters", viewModel.selectedHeight ?? 0))
         }
         .padding(10)
         .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 12))
@@ -257,6 +287,7 @@ struct ARLensView: View {
         #if canImport(ARKit) && !targetEnvironment(simulator)
         arController.onPlaneTap = { relative in
             viewModel.addBlocker(at: SIMD3<Double>(Double(relative.x), Double(relative.y), Double(relative.z)))
+            Haptics.place()
         }
         #endif
     }
@@ -279,9 +310,11 @@ struct ARLensView: View {
         if ARSupport.isWorldTrackingSupported {
             arController.snapshot { image in
                 guard let image else { return }
-                self.shareImage = image
-                self.persistThumbnail(image)
+                let stamped = self.stamped(image)
+                self.shareImage = stamped
+                self.persistThumbnail(stamped)
                 self.showShare = true
+                Haptics.success()
             }
             return
         }
@@ -289,10 +322,22 @@ struct ARLensView: View {
         // Mock-mode export: render the top-down plan.
         let snapshotView = MockSceneView(viewModel: viewModel)
         if let image = SnapshotRenderer.image(from: snapshotView, size: CGSize(width: 1080, height: 1080)) {
-            shareImage = image
-            persistThumbnail(image)
+            let stampedImage = stamped(image)
+            shareImage = stampedImage
+            persistThumbnail(stampedImage)
             showShare = true
+            Haptics.success()
         }
+    }
+
+    /// Burns the honest date/time/location/sun + "Approximate — Umbra" footer
+    /// into an exported image so a shared snapshot stays truthful out of context.
+    private func stamped(_ image: UIImage) -> UIImage {
+        SnapshotStamp.stamp(image, info: SnapshotStamp.Info(
+            title: project.name,
+            dateTime: viewModel.previewDateTimeString,
+            location: viewModel.locationCoordString,
+            sun: viewModel.sunSummaryString))
     }
 
     private func persistThumbnail(_ image: UIImage) {

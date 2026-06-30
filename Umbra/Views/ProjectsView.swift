@@ -61,7 +61,46 @@ struct ProjectsView: View {
                 ARLensView(project: project)
                     .environmentObject(locationService)
             }
+            .safeAreaInset(edge: .top) {
+                if showLocationNudge { locationNudgeBanner }
+            }
         }
+    }
+
+    /// True when shade would be computed for the untouched San Francisco default
+    /// because there's no live fix and the manual location was never set.
+    private var showLocationNudge: Bool {
+        let hasLiveFix = settings.useDeviceLocation && locationService.state.isUsable
+        return !hasLiveFix && settings.isManualLocationDefault
+    }
+
+    private var locationNudgeBanner: some View {
+        Button {
+            showingSettings = true
+        } label: {
+            HStack(spacing: 12) {
+                Image(systemName: "location.magnifyingglass")
+                    .font(.title3)
+                    .foregroundStyle(UmbraTheme.sun)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Set your location")
+                        .font(.subheadline.bold())
+                    Text("Shade is computed for San Francisco until you allow location or set one.")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                Spacer(minLength: 0)
+                Image(systemName: "chevron.right").font(.caption).foregroundStyle(.tertiary)
+            }
+            .padding(12)
+            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 14))
+            .overlay(RoundedRectangle(cornerRadius: 14).strokeBorder(UmbraTheme.sun.opacity(0.35)))
+            .padding(.horizontal)
+            .padding(.bottom, 4)
+        }
+        .buttonStyle(.plain)
+        .accessibilityHint("Opens Settings to allow location or enter a manual location")
     }
 
     private var list: some View {
@@ -124,7 +163,7 @@ struct ProjectsView: View {
             return ResolvedLocation(
                 latitude: loc.coordinate.latitude,
                 longitude: loc.coordinate.longitude,
-                name: locationService.placemarkName ?? "Current Location",
+                name: locationService.liveLocationLabel,
                 isLive: true)
         }
         return ResolvedLocation(
